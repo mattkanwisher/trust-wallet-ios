@@ -24,16 +24,29 @@ final class ButtonsFooterView: UIView {
         return requestButton
     }()
 
+    lazy var stakeButton: Button = {
+        let stakeButton = Button(size: .large, style: .squared)
+        stakeButton.translatesAutoresizingMaskIntoConstraints = false
+        stakeButton.layer.cornerRadius = 6
+        stakeButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        stakeButton.setTitle(NSLocalizedString("Stake", value: "Stake", comment: ""), for: .normal)
+        return stakeButton
+    }()
+
+    
     init(
         frame: CGRect,
         bottomOffset: CGFloat = 0
     ) {
         super.init(frame: frame)
 
-        let stackView = UIStackView(arrangedSubviews: [
-            sendButton,
-            requestButton,
-        ])
+        var stkviews = [   sendButton,
+                           requestButton,
+                           stakeButton,
+                      ]
+        stakeButton.isHidden = true
+
+        let stackView = UIStackView(arrangedSubviews: stkviews)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 15)

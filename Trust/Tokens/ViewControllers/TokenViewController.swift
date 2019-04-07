@@ -6,6 +6,7 @@ import StatefulViewController
 protocol TokenViewControllerDelegate: class {
     func didPressRequest(for token: TokenObject, in controller: UIViewController)
     func didPressSend(for token: TokenObject, in controller: UIViewController)
+    func didPressStake(for token: TokenObject, in controller: UIViewController)
     func didPressInfo(for token: TokenObject, in controller: UIViewController)
     func didPress(viewModel: TokenViewModel, transaction: Transaction, in controller: UIViewController)
 }
@@ -18,6 +19,7 @@ final class TokenViewController: UIViewController {
 
     private lazy var header: TokenHeaderView = {
         let view = TokenHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 242))
+        //TODO:
         return view
     }()
 
@@ -32,7 +34,7 @@ final class TokenViewController: UIViewController {
     init(viewModel: TokenViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-
+        
         navigationItem.title = viewModel.title
         view.backgroundColor = .white
         tableView.tableFooterView = UIView()
@@ -55,6 +57,12 @@ final class TokenViewController: UIViewController {
 
         header.buttonsView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
         header.buttonsView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
+        header.buttonsView.stakeButton.addTarget(self, action: #selector(stake), for: .touchUpInside)
+
+        if viewModel.token.symbol == "LOOM" {
+                header.buttonsView.stakeButton.isHidden = false
+        }
+
         updateHeader()
 
         // TODO: Enable when finished
@@ -134,6 +142,10 @@ final class TokenViewController: UIViewController {
 
     @objc func request() {
         delegate?.didPressRequest(for: viewModel.token, in: self)
+    }
+    
+    @objc func stake() {
+        delegate?.didPressStake(for: viewModel.token, in: self)
     }
 
     deinit {

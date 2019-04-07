@@ -7,6 +7,7 @@ import TrustCore
 protocol TokensCoordinatorDelegate: class {
     func didPressSend(for token: TokenObject, in coordinator: TokensCoordinator)
     func didPressRequest(for token: TokenObject, in coordinator: TokensCoordinator)
+    func didPressStake(for token: TokenObject, in coordinator: TokensCoordinator)
     func didPress(url: URL, in coordinator: TokensCoordinator)
     func didPressDiscover(in coordinator: TokensCoordinator)
 }
@@ -216,6 +217,11 @@ extension TokensCoordinator: TokenViewControllerDelegate {
     }
     func didPressSend(for token: TokenObject, in controller: UIViewController) {
         delegate?.didPressSend(for: token, in: self)
+    }
+    
+    func didPressStake(for token: TokenObject, in controller: UIViewController) {
+        let url = URL(string: "https://m-dashboard.dappchains.com")
+        openURL(url!)
     }
 
     func didPressRequest(for token: TokenObject, in controller: UIViewController) {

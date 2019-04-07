@@ -364,6 +364,10 @@ extension InCoordinator: TokensCoordinatorDelegate {
     func didPressRequest(for token: TokenObject, in coordinator: TokensCoordinator) {
         requestFlow(for: token)
     }
+    func didPressStake(for token: TokenObject, in coordinator: TokensCoordinator) {
+        let url = URL(string: "https://m-dashboard.dappchains.com")
+        showTab(.browser(openURL: url))
+    }
 
     func didPressDiscover(in coordinator: TokensCoordinator) {
         guard let url = RPCServer.main.openseaURL else { return }
